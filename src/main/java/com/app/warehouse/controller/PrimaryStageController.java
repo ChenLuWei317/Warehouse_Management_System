@@ -1,4 +1,4 @@
-package com.app.warehouse_management_system.controller;
+package com.app.warehouse.controller;
 import javafx.fxml.Initializable;
 
 import java.net.URL;

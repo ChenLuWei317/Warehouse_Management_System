@@ -1,4 +1,4 @@
-package com.app.warehouse_management_system.controller;
+package com.app.warehouse.controller;
 
 
 import de.felixroske.jfxsupport.FXMLController;

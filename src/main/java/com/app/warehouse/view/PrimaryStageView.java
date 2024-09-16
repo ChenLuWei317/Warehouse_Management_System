@@ -1,4 +1,4 @@
-package com.app.warehouse_management_system.view;
+package com.app.warehouse.view;
 
 import de.felixroske.jfxsupport.AbstractFxmlView;
 import de.felixroske.jfxsupport.FXMLView;
