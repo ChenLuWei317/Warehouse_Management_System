@@ -11,7 +11,7 @@
  Target Server Version : 80033
  File Encoding         : 65001
 
- Date: 16/09/2024 15:49:40
+ Date: 19/09/2024 12:07:51
 */
 
 SET NAMES utf8mb4;
@@ -29,7 +29,7 @@ CREATE TABLE `软工2202_09_05_29人员表`  (
   `出生日期` date NOT NULL,
   `身份证号` varchar(18) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
   `籍贯` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
-  `地址` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
+  `家庭地址` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
   `联系电话` varchar(11) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
   `备注` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`人员代码`) USING BTREE
@@ -38,7 +38,7 @@ CREATE TABLE `软工2202_09_05_29人员表`  (
 -- ----------------------------
 -- Records of 软工2202_09_05_29人员表
 -- ----------------------------
-INSERT INTO `软工2202_09_05_29人员表` VALUES ('1', '1', 'admin', '男', '2019-10-01', '3', '丰富', '方法', '222', NULL);
+INSERT INTO `软工2202_09_05_29人员表` VALUES ('1', 'admin', 'admin', '男', '2019-10-01', '3', '丰富', '方法', '222', NULL);
 INSERT INTO `软工2202_09_05_29人员表` VALUES ('2', '123abc', 'xxx', '男', '1999-11-26', '350125201911260011', 'fjut', 'ds', '13635228932', NULL);
 
 -- ----------------------------
@@ -50,9 +50,10 @@ CREATE TABLE `软工2202_09_05_29权限管理`  (
   `人员档案管理` int NULL DEFAULT 0,
   `物料档案管理` int NULL DEFAULT 0,
   `进出仓管理` int NULL DEFAULT 0,
-  `管理权限` int NULL DEFAULT 0,
+  `权限管理` int NULL DEFAULT 0,
   `统计打印` int NULL DEFAULT 0,
-  PRIMARY KEY (`人员代码`) USING BTREE
+  PRIMARY KEY (`人员代码`) USING BTREE,
+  CONSTRAINT `软工2202_09_05_29权限管理_ibfk_1` FOREIGN KEY (`人员代码`) REFERENCES `软工2202_09_05_29人员表` (`人员代码`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ) ENGINE = InnoDB CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
@@ -91,17 +92,20 @@ DROP TABLE IF EXISTS `软工2202_09_05_29计量单位`;
 CREATE TABLE `软工2202_09_05_29计量单位`  (
   `id` int NOT NULL AUTO_INCREMENT,
   `单位` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
-  PRIMARY KEY (`id`, `单位`) USING BTREE
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `单位`(`单位`) USING BTREE,
+  INDEX `单位_2`(`单位`, `id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 19 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of 软工2202_09_05_29计量单位
 -- ----------------------------
-INSERT INTO `软工2202_09_05_29计量单位` VALUES (1, '箱');
 INSERT INTO `软工2202_09_05_29计量单位` VALUES (2, '个');
-INSERT INTO `软工2202_09_05_29计量单位` VALUES (3, '台');
-INSERT INTO `软工2202_09_05_29计量单位` VALUES (4, '只');
+INSERT INTO `软工2202_09_05_29计量单位` VALUES (19, '件');
 INSERT INTO `软工2202_09_05_29计量单位` VALUES (5, '千克');
+INSERT INTO `软工2202_09_05_29计量单位` VALUES (4, '只');
+INSERT INTO `软工2202_09_05_29计量单位` VALUES (3, '台');
+INSERT INTO `软工2202_09_05_29计量单位` VALUES (1, '箱');
 
 -- ----------------------------
 -- Table structure for 软工2202_09_05_29进出仓表
@@ -109,57 +113,34 @@ INSERT INTO `软工2202_09_05_29计量单位` VALUES (5, '千克');
 DROP TABLE IF EXISTS `软工2202_09_05_29进出仓表`;
 CREATE TABLE `软工2202_09_05_29进出仓表`  (
   `单号` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
-  `次数` int NULL DEFAULT NULL,
-  `类型` int NOT NULL,
-  `物料代码` varchar(20) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
+  `类型` enum('进仓','出仓') CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
+  `物料代码` int NOT NULL,
   `操作人员代码` varchar(20) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
-  `日期` date NOT NULL,
+  `日期` datetime NOT NULL ON UPDATE CURRENT_TIMESTAMP,
   `数量` int NOT NULL,
   `备注` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL,
-  PRIMARY KEY (`单号`, `物料代码`) USING BTREE
+  PRIMARY KEY (`单号`, `物料代码`) USING BTREE,
+  INDEX `物料代码`(`物料代码`) USING BTREE,
+  INDEX `操作人员代码`(`操作人员代码`) USING BTREE,
+  CONSTRAINT `软工2202_09_05_29进出仓表_ibfk_1` FOREIGN KEY (`物料代码`) REFERENCES `软工2202_09_05_29物料表` (`物料代码`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `软工2202_09_05_29进出仓表_ibfk_2` FOREIGN KEY (`操作人员代码`) REFERENCES `软工2202_09_05_29人员表` (`人员代码`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ) ENGINE = InnoDB CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of 软工2202_09_05_29进出仓表
 -- ----------------------------
-INSERT INTO `软工2202_09_05_29进出仓表` VALUES ('1201911241', 0, 1, '2', '1', '2019-11-24', 100, '无');
-INSERT INTO `软工2202_09_05_29进出仓表` VALUES ('1201911242', 0, 1, '1', '1', '2019-11-24', 100, '无');
-INSERT INTO `软工2202_09_05_29进出仓表` VALUES ('1201911243', 0, 1, '3', '1', '2019-11-24', 0, '无');
-INSERT INTO `软工2202_09_05_29进出仓表` VALUES ('1201911251', 0, 1, '1', '1', '2019-11-25', 100, '无');
-INSERT INTO `软工2202_09_05_29进出仓表` VALUES ('1201911252', 0, 1, '1', '1', '2019-11-25', 100, '无');
-INSERT INTO `软工2202_09_05_29进出仓表` VALUES ('1201911253', 1, 1, '1', '1', '2019-11-25', 500, '无');
-INSERT INTO `软工2202_09_05_29进出仓表` VALUES ('1201911253', 0, 1, '2', '1', '2019-11-25', 100, '无');
-INSERT INTO `软工2202_09_05_29进出仓表` VALUES ('1201912061', 0, 1, '1', '1', '2019-12-06', 1223, '无');
-INSERT INTO `软工2202_09_05_29进出仓表` VALUES ('1201912062', 0, 1, '3', '2', '2019-12-06', 2666, '无');
-INSERT INTO `软工2202_09_05_29进出仓表` VALUES ('1201912063', 0, 1, '6', '2', '2019-12-06', 1000, '无');
-INSERT INTO `软工2202_09_05_29进出仓表` VALUES ('1201912064', 0, 1, '6', '2', '2019-12-06', 1000, '无');
-INSERT INTO `软工2202_09_05_29进出仓表` VALUES ('1201912065', 0, 1, '6', '1', '2019-12-06', 1000, '无');
-
--- ----------------------------
--- Table structure for 软工2202_09_05_29进出单号表
--- ----------------------------
-DROP TABLE IF EXISTS `软工2202_09_05_29进出单号表`;
-CREATE TABLE `软工2202_09_05_29进出单号表`  (
-  `数量` int NOT NULL,
-  `类型` int NOT NULL,
-  `日期` date NOT NULL,
-  PRIMARY KEY (`数量`, `类型`, `日期`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of 软工2202_09_05_29进出单号表
--- ----------------------------
-INSERT INTO `软工2202_09_05_29进出单号表` VALUES (1, 1, '2019-11-24');
-INSERT INTO `软工2202_09_05_29进出单号表` VALUES (1, 1, '2019-11-25');
-INSERT INTO `软工2202_09_05_29进出单号表` VALUES (1, 1, '2019-12-06');
-INSERT INTO `软工2202_09_05_29进出单号表` VALUES (2, 1, '2019-11-24');
-INSERT INTO `软工2202_09_05_29进出单号表` VALUES (2, 1, '2019-11-25');
-INSERT INTO `软工2202_09_05_29进出单号表` VALUES (2, 1, '2019-12-06');
-INSERT INTO `软工2202_09_05_29进出单号表` VALUES (3, 1, '2019-11-24');
-INSERT INTO `软工2202_09_05_29进出单号表` VALUES (3, 1, '2019-11-25');
-INSERT INTO `软工2202_09_05_29进出单号表` VALUES (3, 1, '2019-12-06');
-INSERT INTO `软工2202_09_05_29进出单号表` VALUES (4, 1, '2019-12-06');
-INSERT INTO `软工2202_09_05_29进出单号表` VALUES (5, 1, '2019-12-06');
+INSERT INTO `软工2202_09_05_29进出仓表` VALUES ('1201911241', '进仓', 2, '1', '2019-11-24 00:00:00', 100, '无');
+INSERT INTO `软工2202_09_05_29进出仓表` VALUES ('1201911242', '进仓', 1, '1', '2019-11-24 00:00:00', 100, '无');
+INSERT INTO `软工2202_09_05_29进出仓表` VALUES ('1201911243', '进仓', 3, '1', '2019-11-24 00:00:00', 0, '无');
+INSERT INTO `软工2202_09_05_29进出仓表` VALUES ('1201911251', '进仓', 1, '1', '2024-09-19 11:48:29', 100, '无');
+INSERT INTO `软工2202_09_05_29进出仓表` VALUES ('1201911252', '进仓', 1, '1', '2024-09-19 11:48:32', 100, '无');
+INSERT INTO `软工2202_09_05_29进出仓表` VALUES ('1201911253', '进仓', 1, '1', '2019-11-25 00:00:00', 500, '无');
+INSERT INTO `软工2202_09_05_29进出仓表` VALUES ('1201911253', '进仓', 2, '1', '2019-11-25 00:00:03', 100, '无');
+INSERT INTO `软工2202_09_05_29进出仓表` VALUES ('1201912061', '进仓', 1, '1', '2019-12-06 00:00:00', 1223, '无');
+INSERT INTO `软工2202_09_05_29进出仓表` VALUES ('1201912062', '进仓', 3, '2', '2019-12-06 00:00:00', 2666, '无');
+INSERT INTO `软工2202_09_05_29进出仓表` VALUES ('1201912063', '进仓', 5, '2', '2019-12-06 00:00:00', 1000, '无');
+INSERT INTO `软工2202_09_05_29进出仓表` VALUES ('1201912064', '进仓', 5, '2', '2019-12-06 00:00:00', 1000, '无');
+INSERT INTO `软工2202_09_05_29进出仓表` VALUES ('1201912065', '进仓', 5, '1', '2019-12-06 00:00:00', 1000, '无');
 
 -- ----------------------------
 -- Procedure structure for 添加单号
