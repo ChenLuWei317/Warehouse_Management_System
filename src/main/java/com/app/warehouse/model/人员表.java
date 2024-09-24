@@ -13,7 +13,7 @@ import lombok.Setter;
  * </p>
  *
  * @author 魏陈露
- * @since 2024-09-16
+ * @since 2024-09-24
  */
 @Getter
 @Setter
@@ -37,7 +37,7 @@ public class 人员表 implements Serializable {
 
     private String 籍贯;
 
-    private String 地址;
+    private String 家庭地址;
 
     private String 联系电话;
 

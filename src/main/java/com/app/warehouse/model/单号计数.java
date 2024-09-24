@@ -13,21 +13,19 @@ import lombok.Setter;
  * </p>
  *
  * @author 魏陈露
- * @since 2024-09-16
+ * @since 2024-09-24
  */
 @Getter
 @Setter
-  @TableName("软工2202_09_05_29进出单号表")
-public class 进出单号表 implements Serializable {
+  @TableName("软工2202_09_05_29单号计数")
+public class 单号计数 implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-      //@TableId("数量")
-      private Integer 数量;
-
-      //@TableId("类型")
-      private Integer 类型;
-
-      //@TableId("日期")
+      @TableId("日期")
       private LocalDate 日期;
+
+    private Integer 进仓计数;
+
+    private Integer 出仓计数;
 }

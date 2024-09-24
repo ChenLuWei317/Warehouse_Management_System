@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
  * </p>
  *
  * @author 魏陈露
- * @since 2024-09-16
+ * @since 2024-09-24
  */
 @Service
 public class 进出仓表ServiceImpl extends ServiceImpl<进出仓表Mapper, 进出仓表> implements I进出仓表Service {

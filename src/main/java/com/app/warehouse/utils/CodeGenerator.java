@@ -32,7 +32,7 @@ public class CodeGenerator {
                     builder.mapperBuilder().enableMapperAnnotation().build();//mapper接口中默认添加mapper注解
                     builder.controllerBuilder().enableHyphenStyle()  // 开启驼峰转连字符
                             .enableRestStyle();  // 开启生成@RestController 控制器
-                    builder.addInclude("软工2202_09_05_29人员表","软工2202_09_05_29权限管理","软工2202_09_05_29物料表","软工2202_09_05_29计量单位","软工2202_09_05_29进出仓表","软工2202_09_05_29进出单号表")
+                    builder.addInclude("软工2202_09_05_29单号计数","软工2202_09_05_29计量单位","软工2202_09_05_29进出仓表","软工2202_09_05_29权限管理","软工2202_09_05_29人员表","软工2202_09_05_29物料表")
                             .addTablePrefix("软工2202_09_05_29"); // 设置过滤表前缀
                 })
                 //.templateEngine(new FreemarkerTemplateEngine()) // 使用Freemarker引擎模板，默认的是Velocity引擎模板

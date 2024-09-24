@@ -12,7 +12,7 @@ import lombok.Setter;
  * </p>
  *
  * @author 魏陈露
- * @since 2024-09-16
+ * @since 2024-09-24
  */
 @Getter
 @Setter
@@ -30,7 +30,7 @@ public class 权限管理 implements Serializable {
 
     private Integer 进出仓管理;
 
-    private Integer 管理权限;
+    private Integer 权限管理;
 
     private Integer 统计打印;
 }

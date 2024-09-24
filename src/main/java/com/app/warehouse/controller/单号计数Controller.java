@@ -9,10 +9,10 @@ import org.springframework.web.bind.annotation.RestController;
  * </p>
  *
  * @author 魏陈露
- * @since 2024-09-16
+ * @since 2024-09-24
  */
 @RestController
-@RequestMapping("//进出单号表")
-public class 进出单号表Controller {
+@RequestMapping("//单号计数")
+public class 单号计数Controller {
 
 }

@@ -13,7 +13,7 @@ import lombok.Setter;
  * </p>
  *
  * @author 魏陈露
- * @since 2024-09-16
+ * @since 2024-09-24
  */
 @Getter
 @Setter
@@ -25,6 +25,5 @@ public class 计量单位 implements Serializable {
       @TableId(value = "id", type = IdType.AUTO)
       private Integer id;
 
-      //@TableId("单位")
-      private String 单位;
+    private String 单位;
 }

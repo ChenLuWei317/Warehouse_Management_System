@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
  * </p>
  *
  * @author 魏陈露
- * @since 2024-09-16
+ * @since 2024-09-24
  */
 @Service
 public class 计量单位ServiceImpl extends ServiceImpl<计量单位Mapper, 计量单位> implements I计量单位Service {

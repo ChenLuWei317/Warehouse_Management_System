@@ -1,6 +1,6 @@
 package com.app.warehouse.service;
 
-import com.app.warehouse.model.进出单号表;
+import com.app.warehouse.model.单号计数;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -9,8 +9,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * </p>
  *
  * @author 魏陈露
- * @since 2024-09-16
+ * @since 2024-09-24
  */
-public interface I进出单号表Service extends IService<进出单号表> {
+public interface I单号计数Service extends IService<单号计数> {
 
 }

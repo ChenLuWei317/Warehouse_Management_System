@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
  * </p>
  *
  * @author 魏陈露
- * @since 2024-09-16
+ * @since 2024-09-24
  */
 @Service
 public class 权限管理ServiceImpl extends ServiceImpl<权限管理Mapper, 权限管理> implements I权限管理Service {

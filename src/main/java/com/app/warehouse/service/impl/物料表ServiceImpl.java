@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
  * </p>
  *
  * @author 魏陈露
- * @since 2024-09-16
+ * @since 2024-09-24
  */
 @Service
 public class 物料表ServiceImpl extends ServiceImpl<物料表Mapper, 物料表> implements I物料表Service {
