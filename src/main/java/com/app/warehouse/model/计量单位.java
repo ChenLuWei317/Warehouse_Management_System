@@ -26,4 +26,25 @@ public class 计量单位 implements Serializable {
       private Integer id;
 
     private String 单位;
+
+    public 计量单位(Integer id, String 单位) {
+        this.id = id;
+        this.单位 = 单位;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String get单位() {
+        return 单位;
+    }
+
+    public void set单位(String 单位) {
+        this.单位 = 单位;
+    }
 }

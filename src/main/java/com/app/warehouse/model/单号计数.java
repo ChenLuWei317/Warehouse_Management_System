@@ -28,4 +28,34 @@ public class 单号计数 implements Serializable {
     private Integer 进仓计数;
 
     private Integer 出仓计数;
+
+    public 单号计数(LocalDate 日期, Integer 进仓计数, Integer 出仓计数) {
+        this.日期 = 日期;
+        this.进仓计数 = 进仓计数;
+        this.出仓计数 = 出仓计数;
+    }
+
+    public LocalDate get日期() {
+        return 日期;
+    }
+
+    public void set日期(LocalDate 日期) {
+        this.日期 = 日期;
+    }
+
+    public Integer get进仓计数() {
+        return 进仓计数;
+    }
+
+    public void set进仓计数(Integer 进仓计数) {
+        this.进仓计数 = 进仓计数;
+    }
+
+    public Integer get出仓计数() {
+        return 出仓计数;
+    }
+
+    public void set出仓计数(Integer 出仓计数) {
+        this.出仓计数 = 出仓计数;
+    }
 }
