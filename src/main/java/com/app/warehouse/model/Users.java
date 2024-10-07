@@ -43,7 +43,8 @@ public class Users implements Serializable {
 
     private String 备注;
 
-    private Authority authority;
+    public Users() {
+    }
 
     public Users(String 人员代码, String 密码, String 姓名, String 性别, LocalDate 出生日期, String 身份证号, String 籍贯, String 家庭地址, String 联系电话, String 备注) {
         this.人员代码 = 人员代码;
@@ -62,13 +63,6 @@ public class Users implements Serializable {
         return 人员代码;
     }
 
-    public Authority getAuthority() {
-        return authority;
-    }
-
-    public void setAuthority(Authority authority) {
-        this.authority = authority;
-    }
 
     public void set人员代码(String 人员代码) {
         this.人员代码 = 人员代码;

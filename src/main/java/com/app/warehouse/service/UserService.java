@@ -22,5 +22,7 @@ public interface UserService extends IService<Users> {
 
     R addUser(Users user);
 
+    R<String> register(Users user);
+
     R updateUserById(Users user);
 }

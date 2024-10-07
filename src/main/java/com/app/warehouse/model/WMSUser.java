@@ -17,33 +17,52 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class WMSUser implements UserDetails {
-
     @Resource
     private Users user;
 
-    private List<String> permissions;
+    private List<String> permissions = new ArrayList<>(); // 初始化
 
     @JSONField(serialize = false)  // 不进行序列化
     private List<GrantedAuthority> authorities;
 
+    @Resource
+    private Authority authority;
+
     // 返回权限列表
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        String isRoot = String.valueOf(user.getAuthority().get人员档案管理());
-        SimpleGrantedAuthority simpleGrantedAuthority = new SimpleGrantedAuthority(isRoot);
         authorities = new ArrayList<>();
-        authorities.add(simpleGrantedAuthority);
+
+        // 确保 authority 已初始化
+        if (authority != null) {
+            if (authority.get人员档案管理() != null && authority.get人员档案管理() == 1) {
+                authorities.add(new SimpleGrantedAuthority("PERMISSION_PERSONNEL_MANAGEMENT"));
+            }
+            if (authority.get物料档案管理() != null && authority.get物料档案管理() == 1) {
+                authorities.add(new SimpleGrantedAuthority("PERMISSION_MATERIAL_MANAGEMENT"));
+            }
+            if (authority.get进出仓管理() != null && authority.get进出仓管理() == 1) {
+                authorities.add(new SimpleGrantedAuthority("PERMISSION_WAREHOUSE_MANAGEMENT"));
+            }
+            if (authority.get权限管理() != null && authority.get权限管理() == 1) {
+                authorities.add(new SimpleGrantedAuthority("PERMISSION_AUTHORITY_MANAGEMENT"));
+            }
+            if (authority.get统计打印() != null && authority.get统计打印() == 1) {
+                authorities.add(new SimpleGrantedAuthority("PERMISSION_STATISTICS_PRINTING"));
+            }
+        }
+
         return authorities;
     }
 
     @Override
     public String getPassword() {
-        return user.get密码();
+        return user != null ? user.get密码() : null; // 防止 user 为 null
     }
 
     @Override
     public String getUsername() {
-        return user.get人员代码();
+        return user != null ? user.get人员代码() : null; // 防止 user 为 null
     }
 
     @Override
@@ -64,5 +83,14 @@ public class WMSUser implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return "WMSUser{" +
+                "user=" + user +
+                ", permissions=" + permissions +
+                ", authorities=" + authorities +
+                '}';
     }
 }

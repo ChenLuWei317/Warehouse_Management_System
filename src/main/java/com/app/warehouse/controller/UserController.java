@@ -52,14 +52,14 @@ public class UserController {
      * @PreAuthorize("hasAuthority('1')")
      * 拥有人员档案管理权限的admin才能使用的方法
      */
-    @PreAuthorize("hasAuthority('1')")
+    @PreAuthorize("hasAuthority(@authorityConstants.PERSONNEL_MANAGEMENT)")
     @GetMapping("/selectAll")
     public R<List<Users>> selectAll() {
         List<Users> userList = userService.list((Wrapper<Users>) null);
         return R.success(userList);
     }
 
-    @PreAuthorize("hasAuthority('1')")
+    @PreAuthorize("hasAuthority(@authorityConstants.PERSONNEL_MANAGEMENT)")
     @GetMapping("/selectPage")
     public R<IPage<Users>> selectPage(Integer current, Integer size) {
         IPage<Users> page = new Page<>(current, size);
@@ -67,7 +67,7 @@ public class UserController {
         return R.success(page);
     }
 
-    @PreAuthorize("hasAuthority('1')")
+    @PreAuthorize("hasAuthority(@authorityConstants.PERSONNEL_MANAGEMENT)")
     @PostMapping("/addUser")
     public R addUser(@RequestBody Users user) {
         if (!checkStringNumbers(user.get人员代码(), 18)) {
@@ -76,7 +76,7 @@ public class UserController {
         return userService.addUser(user);
     }
 
-    @PreAuthorize("hasAuthority('1')")
+    @PreAuthorize("hasAuthority(@authorityConstants.PERSONNEL_MANAGEMENT)")
     @PostMapping("/deleteByName")
     public R<String> deleteUserByName(@RequestBody Users user) {
         QueryWrapper<Users> qw = new QueryWrapper<>();
@@ -87,7 +87,7 @@ public class UserController {
         return R.error("delete fails!!");
     }
 
-    @PreAuthorize("hasAuthority('1')")
+    @PreAuthorize("hasAuthority(@authorityConstants.PERSONNEL_MANAGEMENT)")
     @PostMapping("/deleteById")
     public R<String> deleteUserById(@RequestBody Users user) {
         QueryWrapper<Users> qw = new QueryWrapper<>();
@@ -98,7 +98,7 @@ public class UserController {
         return R.error("delete fails!!");
     }
 
-    @PreAuthorize("hasAuthority('1')")
+    @PreAuthorize("hasAuthority(@authorityConstants.PERSONNEL_MANAGEMENT)")
     @PostMapping("/updateUserById")
     public R<String> updateUser(@RequestBody Users user) {
         if (!checkStringNumbers(user.get人员代码(), 18)) {
@@ -106,6 +106,13 @@ public class UserController {
         }
         return userService.updateUserById(user);
     }
+
+    @PreAuthorize("permitAll") // 允许所有用户访问注册接口
+    @PostMapping("/register")
+    public R<String> register(@RequestBody Users user) {
+        return userService.register(user);
+    }
+
 
     /**
      * 校验字符串中的数字格式

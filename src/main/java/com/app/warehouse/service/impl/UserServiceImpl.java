@@ -13,11 +13,14 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -40,6 +43,14 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, Users> implements U
 
     @Resource
     AuthenticationManager authenticationManager;
+
+    UserMapper userMapper;
+
+    public Users getUserWithAuthority(String userName) {
+        return userMapper.selectUserWithAuthority(userName);
+    }
+
+
 
     @Override
     public R<HashMap<String, Object>> login(String userName, String password) {
@@ -68,8 +79,13 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, Users> implements U
         String token = JwtUtil.sign(map);
         HashMap<String, Object> resultMap = new HashMap<>();
         resultMap.put("token", token);
-        Integer isRoot = wmsUser.getUser().getAuthority().get人员档案管理();
-        if (isRoot.equals(1)) {
+
+        // 动态获取用户权限
+        List<GrantedAuthority> authorities = (List<GrantedAuthority>) wmsUser.getAuthorities();
+        boolean isSuperAdmin = authorities.stream()
+                .anyMatch(auth -> auth.getAuthority().equals("PERMISSION_PERSONNEL_MANAGEMENT"));
+
+        if (isSuperAdmin) {
             resultMap.put("identify", "superAdmin");
         } else {
             resultMap.put("identify", "admin");
@@ -96,6 +112,37 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, Users> implements U
         save(user);
         return R.success();
     }
+    @Override
+    @Transactional
+    public R<String> register(Users user) {
+        // 校验用户输入
+        if (!checkStringNumbers(user.get人员代码(), 18)) {
+            return R.error("Incorrectly formatted User ID number !!");
+        }
+
+        // 检查用户是否已存在
+        Users existingUser = query().eq("人员代码", user.get人员代码()).one();
+        if (existingUser != null) {
+            return R.error("User already exists!");
+        }
+
+        // 使用 BCrypt 编码密码
+        String encodedPassword = passwordEncoder.encode(user.get密码());
+        user.set密码(encodedPassword);
+
+        // 保存用户
+        if (save(user)) {
+            return R.success("Registration successful!");
+        }
+
+        return R.error("Registration failed!");
+    }
+
+    // 校验字符串中的数字格式
+    private boolean checkStringNumbers(String numberString, int size) {
+        return numberString != null && numberString.length() == size && numberString.matches("\\d+");
+    }
+
 
     @Override
     public R updateUserById(Users user){
