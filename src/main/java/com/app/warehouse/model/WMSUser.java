@@ -18,7 +18,7 @@ import java.util.List;
 @NoArgsConstructor
 public class WMSUser implements UserDetails {
     @Resource
-    private Users user;
+    private User user;
 
     private List<String> permissions = new ArrayList<>(); // 初始化
 

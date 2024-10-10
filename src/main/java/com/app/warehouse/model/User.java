@@ -18,7 +18,7 @@ import lombok.Setter;
 @Getter
 @Setter
   @TableName("软工2202_09_05_29人员表")
-public class Users implements Serializable {
+public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -43,10 +43,10 @@ public class Users implements Serializable {
 
     private String 备注;
 
-    public Users() {
+    public User() {
     }
 
-    public Users(String 人员代码, String 密码, String 姓名, String 性别, LocalDate 出生日期, String 身份证号, String 籍贯, String 家庭地址, String 联系电话, String 备注) {
+    public User(String 人员代码, String 密码, String 姓名, String 性别, LocalDate 出生日期, String 身份证号, String 籍贯, String 家庭地址, String 联系电话, String 备注) {
         this.人员代码 = 人员代码;
         this.密码 = 密码;
         this.姓名 = 姓名;
@@ -138,5 +138,21 @@ public class Users implements Serializable {
 
     public void set备注(String 备注) {
         this.备注 = 备注;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "人员代码='" + 人员代码 + '\'' +
+                ", 密码='" + 密码 + '\'' +
+                ", 姓名='" + 姓名 + '\'' +
+                ", 性别='" + 性别 + '\'' +
+                ", 出生日期=" + 出生日期 +
+                ", 身份证号='" + 身份证号 + '\'' +
+                ", 籍贯='" + 籍贯 + '\'' +
+                ", 家庭地址='" + 家庭地址 + '\'' +
+                ", 联系电话='" + 联系电话 + '\'' +
+                ", 备注='" + 备注 + '\'' +
+                '}';
     }
 }

@@ -2,7 +2,7 @@ package com.app.warehouse.service.impl;
 
 import com.app.warehouse.common.R;
 import com.app.warehouse.model.WMSUser;
-import com.app.warehouse.model.Users;
+import com.app.warehouse.model.User;
 import com.app.warehouse.dao.UserMapper;
 import com.app.warehouse.service.UserService;
 import com.app.warehouse.utils.JwtUtil;
@@ -33,7 +33,7 @@ import java.util.Objects;
  * @since 2024-09-24
  */
 @Service
-public class UserServiceImpl extends ServiceImpl<UserMapper, Users> implements UserService {
+public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
 
     @Resource
     RedisUtil redisUtil;
@@ -43,14 +43,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, Users> implements U
 
     @Resource
     AuthenticationManager authenticationManager;
-
-    UserMapper userMapper;
-
-    public Users getUserWithAuthority(String userName) {
-        return userMapper.selectUserWithAuthority(userName);
-    }
-
-
 
     @Override
     public R<HashMap<String, Object>> login(String userName, String password) {
@@ -101,10 +93,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, Users> implements U
     }
 
     @Override
-    public R addUser(Users user) {
+    public R addUser(User user) {
         // 判断是否已经存在
         String userNumbers = user.get人员代码();
-        Users users = query().eq("user_numbers", userNumbers).one();
+        User users = query().eq("user_numbers", userNumbers).one();
         if (!Objects.isNull(users)) {
             return R.error("用户已存在");
         }
@@ -114,14 +106,14 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, Users> implements U
     }
     @Override
     @Transactional
-    public R<String> register(Users user) {
+    public R<String> register(User user) {
         // 校验用户输入
         if (!checkStringNumbers(user.get人员代码(), 18)) {
             return R.error("Incorrectly formatted User ID number !!");
         }
 
         // 检查用户是否已存在
-        Users existingUser = query().eq("人员代码", user.get人员代码()).one();
+        User existingUser = query().eq("人员代码", user.get人员代码()).one();
         if (existingUser != null) {
             return R.error("User already exists!");
         }
@@ -145,10 +137,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, Users> implements U
 
 
     @Override
-    public R updateUserById(Users user){
+    public R updateUserById(User user){
         // 判断是否已经存在
         String userNumbers = user.get人员代码();
-        Users users = query().eq("user_numbers", userNumbers).one();
+        User users = query().eq("user_numbers", userNumbers).one();
         if (!Objects.isNull(users)) {
             updateById(user);
             return R.success("用户信息更新成功");
