@@ -8,6 +8,7 @@ class WarehouseApplicationTests {
 
     @Test
     void contextLoads() {
+        System.err.println("test");
     }
 
 }
