@@ -3,43 +3,66 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<?import javafx.scene.control.PasswordField?>
-<VBox alignment="CENTER" prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.app.warehouse.controller.UserController">
+<?import javafx.scene.control.Hyperlink?>
+<VBox xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx/fxml/1" fx:controller="com.app.warehouse.controller.UserController"
+      fx:id="mainVBox1" alignment="CENTER" spacing="20" style="-fx-background-color: rgba(255, 255, 255, 0.9); -fx-background-image: url('/css/OIP.jpg'); -fx-background-size: cover;"
+      stylesheets="@style.css">
+
+   <padding>
+      <!-- 给整个 VBox 增加一些内边距 -->
+      <Insets top="20" right="20" bottom="20" left="20"/>
+   </padding>
+
    <children>
-      <Label prefHeight="56.0" prefWidth="370.0" text="DFSAFDSAFDFSA">
-         <font>
-            <Font size="44.0" />
-         </font>
-      </Label>
-      <TextField fx:id="Username" maxHeight="-Infinity" maxWidth="-Infinity" promptText="在这里输入账号">
-         <font>
-            <Font size="15.0" />
-         </font>
-         <VBox.margin>
-            <Insets top="12.0" />
-         </VBox.margin>
-      </TextField>
-      <PasswordField fx:id="Password" maxHeight="-Infinity" maxWidth="-Infinity" promptText="在这里输入密码">
-         <font>
-            <Font size="15.0" />
-         </font>
-         <VBox.margin>
-            <Insets top="12.0" />
-         </VBox.margin>
-      </PasswordField>
-      <Button mnemonicParsing="false" prefHeight="31.0" prefWidth="201.0" text="登录" fx:id="LoginButton" onAction="#LoginButtonOnClick">
-         <VBox.margin>
-            <Insets top="12.0" />
-         </VBox.margin>
-      </Button>
-      <Button mnemonicParsing="false" prefHeight="33.0" prefWidth="201.0" text="注册" fx:id="RegisterButton">
-         <VBox.margin>
-            <Insets top="12.0" />
-         </VBox.margin>
-      </Button>
+      <!-- Title Label -->
+      <Label text="登入" style="-fx-font-size: 20px; -fx-text-fill: gray;"/>
+
+      <!-- HBox for 身份证号 -->
+      <HBox spacing="10" alignment="CENTER_LEFT">
+         <padding>
+            <!-- 给 HBox 增加一些内边距 -->
+            <Insets top="20" right="20" bottom="20" left="350"/>
+         </padding>
+         <Label text="身份证号:" style="-fx-font-size: 20px; -fx-text-fill: gray;"/>
+         <TextField fx:id="Username" promptText="在这里输入账号" prefWidth="250">
+            <font>
+               <Font size="15.0" />
+            </font>
+         </TextField>
+      </HBox>
+
+      <!-- HBox for 密码 -->
+      <HBox spacing="10" alignment="CENTER_LEFT">
+         <padding>
+            <Insets top="20" right="20" bottom="20" left="390"/>
+         </padding>
+         <Label text="密码:" style="-fx-font-size: 20px; -fx-text-fill: gray;"/>
+         <PasswordField fx:id="Password" promptText="在这里输入密码" prefWidth="250">
+            <font>
+               <Font size="15.0" />
+            </font>
+         </PasswordField>
+      </HBox>
+
+      <!-- Button for 登录 -->
+      <Button mnemonicParsing="false" prefHeight="10.0" prefWidth="150" text="登录" fx:id="LoginButton" onAction="#LoginButtonOnClick"/>
+
+      <!-- HBox for 超链接 -->
+      <HBox alignment="BOTTOM_LEFT" spacing="10">
+         <padding>
+            <!-- 给 HBox 增加内边距，使其靠近底部左侧 -->
+            <Insets top="20" right="20" bottom="20" left="10"/>
+         </padding>
+         <Hyperlink text="还没有账户？" fx:id="registerLink" onAction="#handleRegister"/>
+      </HBox>
    </children>
 </VBox>
+
+
+

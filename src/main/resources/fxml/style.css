@@ -1,0 +1,69 @@
+/* 整体布局的根样式 */
+.root {
+    -fx-background-color: white;
+}
+
+/* 标题文本样式 */
+.text {
+    -fx-font-family: "Microsoft YaHei";
+    -fx-font-size: 25px;
+    -fx-font-weight: NORMAL;
+    -fx-fill: black;
+}
+
+/* 文本框样式 */
+.text-field, .password-field {
+    -fx-font-size: 14px;
+    -fx-background-color: #F5F5F5;
+    -fx-border-color: #DADADA;
+    -fx-border-radius: 5px;
+    -fx-padding: 10px;
+}
+
+/* 当鼠标悬停在文本框上时的样式 */
+.text-field:hover, .password-field:hover {
+    -fx-border-color: #007FFF;
+}
+
+/* 复选框样式 */
+.check-box {
+    -fx-font-family: "Microsoft YaHei";
+    -fx-font-size: 13px;
+    -fx-text-fill: black;
+}
+
+/* 超链接样式 */
+.hyperlink {
+    -fx-font-size: 15px;
+    -fx-text-fill: #007FFF;
+    -fx-underline: true;
+    -fx-cursor: hand;
+}
+
+/* 鼠标悬停时的超链接样式 */
+.hyperlink:hover {
+    -fx-text-fill: #0059B3;
+}
+
+/* 登录按钮样式 */
+.button {
+    -fx-background-color: linear-gradient(from 0% 0% to 100% 100%, #007FFF, #0059B3);
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-padding: 10px 20px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-cursor: hand;
+}
+
+/* 鼠标悬停时的按钮样式 */
+.button:hover {
+    -fx-background-color: linear-gradient(from 0% 0% to 100% 100%, #0059B3, #007FFF);
+    -fx-text-fill: white;
+}
+
+/* 提示文本 */
+.text-field:focused, .password-field:focused {
+    -fx-border-color: #007FFF;
+    -fx-background-color: white;
+}
