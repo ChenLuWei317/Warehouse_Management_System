@@ -1,0 +1,5 @@
+# Created at 2024-10-13T21:54:28.405
+Boot Manifest-JAR contains absolute paths in classpath 'C:\Program Files (x86)\Java\jdk1.8.0_361\jre\..\lib\ant-javafx.jar'
+Hint: <argLine>-Djdk.net.URLClassPath.disableClassPathURLCheck=true</argLine>
+'other' has different root
+
