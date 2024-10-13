@@ -1,22 +1,35 @@
 package com.app.warehouse;
+import com.app.warehouse.service.impl.UserDetailServiceImpl;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Modality;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.io.IOException;
 
 @SpringBootApplication
 @MapperScan("com.app.warehouse.dao")
 public class WarehouseApplication extends Application {
+
+    @Autowired
+    private UserDetailServiceImpl userDetailService;
+    @Autowired
+    private AuthenticationManager authenticationManager;
     public static void main(String[] args) {
 
         launch(WarehouseApplication.class, args);
@@ -45,6 +58,7 @@ public class WarehouseApplication extends Application {
     public static ApplicationContext getContext() {
         return SpringApplication.run(WarehouseApplication.class);
     }
+
 
 
 }
