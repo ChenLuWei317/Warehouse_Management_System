@@ -44,6 +44,8 @@ public class UserDetailServiceImpl implements UserDetailsService {
 
             authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
 
+        } else if (authority.get权限管理() != null && authority.get权限管理() == 1) {
+            authorities.add(new SimpleGrantedAuthority("AUTHORITY"));
         }
         return new org.springframework.security.core.userdetails.User(
                 user.get人员代码(),

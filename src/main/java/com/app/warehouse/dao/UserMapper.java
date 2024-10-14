@@ -23,5 +23,6 @@ public interface UserMapper extends BaseMapper<User> {
     User selectUserWithAuthority(@Param("userName") String userName);
 
     User login(@Param("code") String code, @Param("password") String password);
+
 }
 
