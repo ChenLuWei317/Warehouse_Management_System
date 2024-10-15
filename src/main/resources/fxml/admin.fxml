@@ -17,48 +17,20 @@
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.layout.VBox?>
 
-<TabPane xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx/fxml/1" fx:controller="com.app.warehouse.controller.AdminController" styleClass="tab-pane">
+<?import javafx.scene.layout.Pane?>
 
-    <!-- 人员管理 Tab -->
-    <tabs>
-        <Tab text="人员管理" fx:id="personnelTab">
-            <content>
-                <VBox fx:id="personnelVBox" spacing="10" style="-fx-padding: 10;">
-                    <Label text="人员管理功能" style="-fx-font-size: 18px;"/>
-                    <!-- 这里可以放置具体的人员管理组件 -->
-                </VBox>
-            </content>
-        </Tab>
 
-        <!-- 出入库管理 Tab -->
-        <Tab text="出入库管理" fx:id="inOutTab">
-            <content>
-                <VBox fx:id="inOutVBox" spacing="10" style="-fx-padding: 10;">
-                    <Label text="出入库管理功能" style="-fx-font-size: 18px;"/>
-                    <!-- 这里可以放置具体的出入库管理组件 -->
-                </VBox>
-            </content>
-        </Tab>
 
-        <!-- 仓库管理 Tab -->
-        <Tab text="仓库管理" fx:id="warehouseTab">
-            <content>
-                <VBox fx:id="warehouseVBox" spacing="10" style="-fx-padding: 10;">
-                    <Label text="仓库管理功能" style="-fx-font-size: 18px;"/>
-                    <!-- 这里可以放置具体的仓库管理组件 -->
-                </VBox>
-            </content>
-        </Tab>
+<HBox xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx/fxml/1" fx:controller="com.app.warehouse.controller.AdminController" prefHeight="1198.0" prefWidth="255.0">
+    <children>
+        <Pane prefHeight="1198.0" prefWidth="256.0" styleClass="MenuBackground">
+            <children>
+                <Button contentDisplay="CENTER" graphicTextGap="0.0" layoutY="223.0" mnemonicParsing="false" onAction="#PeopleManage" prefHeight="77.0" prefWidth="256.0" styleClass="MenuButton" text="人员管理" textAlignment="CENTER" textFill="WHITE" />
+                <Button contentDisplay="CENTER" graphicTextGap="0.0" layoutY="146.0" mnemonicParsing="false" prefHeight="77.0" prefWidth="256.0" styleClass="MenuButton" text="摄像头管理" textAlignment="CENTER" textFill="WHITE" />
+                <Button contentDisplay="CENTER" graphicTextGap="0.0" layoutY="300.0" mnemonicParsing="false" prefHeight="77.0" prefWidth="256.0" styleClass="MenuButton" text="轨迹追踪" textAlignment="CENTER" textFill="WHITE" />
+            </children>
+        </Pane>
+    </children>
+</HBox>
 
-        <!-- 打印报表 Tab -->
-        <Tab text="打印报表" fx:id="reportTab">
-            <content>
-                <VBox fx:id="reportVBox" spacing="10" style="-fx-padding: 10;">
-                    <Label text="打印报表功能" style="-fx-font-size: 18px;"/>
-                    <!-- 这里可以放置具体的报表打印组件 -->
-                </VBox>
-            </content>
-        </Tab>
-    </tabs>
-</TabPane>
 
