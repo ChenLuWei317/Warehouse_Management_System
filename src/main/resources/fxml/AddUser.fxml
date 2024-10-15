@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="com.app.warehouse.controller.AddUser" spacing="10" alignment="CENTER">
+    <Label text="添加用户" />
+    <TextField fx:id="usernameField" promptText="输入用户名" />
+    <Button text="添加用户" onAction="#handleAddUser" />
+</VBox>
