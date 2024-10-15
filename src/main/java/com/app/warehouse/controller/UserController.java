@@ -9,6 +9,7 @@ import javafx.animation.FadeTransition;
 import javafx.animation.ParallelTransition;
 import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -112,29 +113,64 @@ public class UserController implements Initializable {
 
 
     @FXML
-    public void LoginButtonOnClick(){
+    public void LoginButtonOnClick() {
         String UsernameValue = Username.getText().trim();
         String PasswordValue = Password.getText().trim();
-        System.out.println("u+"+UsernameValue+"p+"+PasswordValue);
 
-        User tmp = new User();
-        tmp.set人员代码(UsernameValue);
-        tmp.set密码(PasswordValue);
-        try {
-            User user1 =userMapper.login(tmp.get人员代码(), tmp.get密码());
-            System.out.println(user1.toString());
-            //开始存储账号密码
-            UserDetails user = userDetailService.loadUserByUsername(tmp.get人员代码());
-            Authentication authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
-            SecurityContextHolder.getContext().setAuthentication(authentication);
+        // 创建后台任务
+        Task<Void> loginTask = new Task<Void>() {
+            @Override
+            protected Void call() throws Exception {
+                User tmp = new User();
+                tmp.set人员代码(UsernameValue);
+                tmp.set密码(PasswordValue);
+                try {
+                    User user1 = userMapper.login(tmp.get人员代码(), tmp.get密码());
+                    if (user1 != null) {
+                        // 登录成功
+                        UserDetails user = userDetailService.loadUserByUsername(tmp.get人员代码());
+                        Authentication authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
+                        SecurityContextHolder.getContext().setAuthentication(authentication);
 
-            viewDialog(1);
-        }catch(Exception e){
-            e.printStackTrace();
-            viewDialog(2);
-        }
-        System.out.println(tmp.toString());
+                        // 在UI线程上执行跳转
+                        Platform.runLater(() -> {
+                            try {
+                                loadAdminController();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        });
+                    } else {
+                        Platform.runLater(() -> viewDialog(2));
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Platform.runLater(() -> viewDialog(2)); // 登录失败提示
+                }
+                return null;
+            }
+        };
 
+        // 启动任务
+        new Thread(loginTask).start();
+    }
+
+    private void loadAdminController() throws IOException {
+        // 加载 AdminController 的 FXML 文件
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/admin.fxml"));
+        Parent adminRoot = loader.load();
+
+        // 获取当前窗口并切换场景
+        Stage stage = (Stage) Username.getScene().getWindow();
+
+        Rectangle2D screenRectangle = Screen.getPrimary().getBounds();
+        double width = screenRectangle.getWidth();
+        double height = screenRectangle.getHeight();
+        // 创建一个新的场景，并设置为当前舞台的场景
+        Scene scene = new Scene(adminRoot, (15.0/25)*width, (17.0/25)*height); // 保持当前窗口大小
+        stage.setScene(scene);
+        stage.setTitle("仓库管理系统");
+        stage.show();
     }
 
     private boolean hasAdminPermission() {
@@ -153,37 +189,37 @@ public class UserController implements Initializable {
         DialogPane dialog = new DialogPane();
         if(x==1){
             dialog.setContentText("登录成功~~");
-            try {
-                // 创建一个新的 Stage
-                Stage registerStage = new Stage();
-
-                // 创建根布局
-                VBox registerRoot = new VBox();
-                registerRoot.setSpacing(20);
-                registerRoot.setPadding(new Insets(20));
-
-                Button adminButton = new Button("管理员专属功能");
-                adminButton.setOnAction(event -> {
-                    if (!hasAdminPermission()) {
-                        Alert alert = new Alert(Alert.AlertType.WARNING, "您没有权限访问这个功能！");
-                        alert.showAndWait();
-                    } else {
-                        // 管理员专属功能的逻辑
-                        AdminButtonOnClick();
-                    }
-                });
-
-                // 将控件添加到布局中
-                registerRoot.getChildren().addAll(adminButton);
-
-                // 设置场景并显示窗口
-                Scene registerScene = new Scene(registerRoot, 300, 200);
-                registerStage.setScene(registerScene);
-                registerStage.setTitle("注册");
-                registerStage.show();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+//            try {
+//                // 创建一个新的 Stage
+//                Stage registerStage = new Stage();
+//
+//                // 创建根布局
+//                VBox registerRoot = new VBox();
+//                registerRoot.setSpacing(20);
+//                registerRoot.setPadding(new Insets(20));
+//
+//                Button adminButton = new Button("管理员专属功能");
+//                adminButton.setOnAction(event -> {
+//                    if (!hasAdminPermission()) {
+//                        Alert alert = new Alert(Alert.AlertType.WARNING, "您没有权限访问这个功能！");
+//                        alert.showAndWait();
+//                    } else {
+//                        // 管理员专属功能的逻辑
+//                        AdminButtonOnClick();
+//                    }
+//                });
+//
+//                // 将控件添加到布局中
+//                registerRoot.getChildren().addAll(adminButton);
+//
+//                // 设置场景并显示窗口
+//                Scene registerScene = new Scene(registerRoot, 300, 200);
+//                registerStage.setScene(registerScene);
+//                registerStage.setTitle("注册");
+//                registerStage.show();
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
         }else if(x==2){
             dialog.setContentText("登录失败~~");
         }
