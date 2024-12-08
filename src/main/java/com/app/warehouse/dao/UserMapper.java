@@ -5,17 +5,11 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Insert;
 
-/**
- * <p>
- *  Mapper 接口
- * </p>
- *
- * @author 魏陈露
- * @since 2024-09-24
- */
 @Mapper
 public interface UserMapper extends BaseMapper<User> {
+
     @Select("SELECT u.*, a.人员档案管理, a.物料档案管理, a.进出仓管理, a.管理权限, a.统计打印 " +
             "FROM 软工2202_09_05_29人员表 u " +
             "LEFT JOIN 软工2202_09_05_29权限管理 a ON u.人员代码 = a.人员代码 " +
@@ -24,5 +18,6 @@ public interface UserMapper extends BaseMapper<User> {
 
     User login(@Param("code") String code, @Param("password") String password);
 
+    @Insert("INSERT INTO 软工2202_09_05_29人员表 (人员代码, 密码) VALUES (#{user.人员代码}, #{user.密码})")
+    void register(@Param("user") User user);
 }
-
